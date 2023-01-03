@@ -1,5 +1,8 @@
 # YNOV B3 DEVOPS WORKFLOW RELEASE
 
+## What's the project ?
+Design a release workflow for an nodeJS API. Our objective is to master CI/CD so the API is not important and taken from an other project.
+
 ## What is a release workflow ?
 ### What is a workflow ?
 A workflow is a succession of stages designed to achieve a purpose.
