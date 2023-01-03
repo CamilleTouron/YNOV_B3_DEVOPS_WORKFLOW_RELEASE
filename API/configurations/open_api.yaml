@@ -1,0 +1,724 @@
+openapi: 3.0.3
+info:
+  title: SECRET SANTA
+  description: API for web site handling SECRET SANTA events.
+  contact:
+    email: touroncamille@icloud.com
+  version: 1.0.0
+servers:
+  - url: "{protocol}://{server}"
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      server:
+        default: localhost:3003
+tags:
+  - name: member
+    description: Everything about members.
+  - name: event
+    description: Everything about events.
+  - name: participations
+    description: Everything about participations.
+  - name: admin
+    description: Everything for admin.
+paths:
+  /help:
+    get:
+      tags:
+        - admin
+      summary: Get all routes.
+      description: Help to list all routes, reserved for admin.
+      security:
+        - auth: []
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /login:
+    post:
+      tags:
+        - member
+        - admin
+      summary: login
+      description: Route to get a token to be authenticate.
+      requestBody:
+          $ref: "#/components/requestBodies/Login"
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"  
+  /cache:
+    delete:
+      tags:
+        - cache
+      summary: Delete server cache.
+      description: Delete server cache.
+      security:
+        - auth: []
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"    
+  /member:
+    get:
+      tags:
+        - member
+      summary: Get all members.
+      description: Get all members.
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembersForShowing'
+    post:
+      tags:
+        - member
+      summary: Create member.
+      description: Create member with complexe password.
+      requestBody:
+          $ref: "#/components/requestBodies/MemberCreation"
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /member/{id}:
+    get:
+      tags:
+        - member
+      summary: Get member by id.
+      description: Get member by id.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: member id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberForShowing'
+    delete:
+      tags:
+        - member
+      summary: Request to delete member.
+      description: Request to delete member by id member.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id member.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+    patch:
+      tags:
+        - member
+      summary: Update member.
+      description: Update member.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id member.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+          $ref: "#/components/requestBodies/MemberCreation"
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /member/admin/{id}:
+    delete:
+      tags:
+        - member
+      summary: Delete member.
+      description: Delete member by id.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id member.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /event:
+    get:
+      tags:
+        - event
+      summary: Get all events.
+      description: Get all events.
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsForShowing'
+    post:
+      tags:
+        - event
+      summary: Create event.
+      description: Create event with unique name.
+      security:
+        - auth: []
+      requestBody:
+          $ref: "#/components/requestBodies/EventCreation"
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /event/{id}:
+    get:
+      tags:
+        - event
+      summary: Get event by id.
+      description: Get event by id.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: event id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventForShowing'
+    delete:
+      tags:
+        - event
+      summary: Delete event.
+      description: Delete event by id.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Event id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+    patch:
+      tags:
+        - event
+      summary: Update event.
+      description: Update event.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id de l'adhérent.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+          $ref: "#/components/requestBodies/EventCreation"
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /participation:
+    get:
+      tags:
+        - participation
+      summary: Get all participations.
+      description:  Get all participations.
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipationsForShowing'
+    post:
+      tags:
+        - participation
+      summary: Create participation.
+      description: Create participation.
+      security:
+        - auth: []
+      requestBody:
+          $ref: "#/components/requestBodies/ParticipationCreation"
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /participation/{id}:
+    get:
+      tags:
+        - participation
+      summary: Get participation by id.
+      description: Get participation by id.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: participation id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipationForShowing'
+    delete:
+      tags:
+        - participation
+      summary: Delete participation by id.
+      description: Delete participation by id.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: participation id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+    patch:
+      tags:
+        - participation
+      summary: Update participation.
+      description: Update participation.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id de l'adhérent.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+          $ref: "#/components/requestBodies/ParticipationCreation"
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /event/draw/{id}:
+    patch:
+      tags:
+        - event
+      summary: Draw participation.
+      description: Draw participation.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id event.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /administration/{id}:
+    get:
+      tags:
+        - admin
+      summary: Get administration by id.
+      description: Get administration by id.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id administration.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdministrationForShowing'
+    delete:
+      tags:
+        - admin
+      summary: Delete administration by id.
+      description: Delete administration by id.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id administration.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+    patch:
+      tags:
+        - admin
+      summary: Get administration by id.
+      description: Get administration by id.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id administration.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /administration:
+    get:
+      tags:
+        - admin
+      summary: Get all administrations.
+      description: Get all administrations.
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdministrationsForShowing'
+    post:
+      tags:
+        - admin
+      summary: Create administration.
+      description: Create administration.
+      security:
+        - auth: []
+      requestBody:
+          $ref: "#/components/requestBodies/AdministrationCreation"
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /administration/admin/{id}:
+    get:
+      tags:
+        - admin
+      summary: Get administrations by id admin.
+      description: Get administrations by id admin.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id admin.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdministrationForShowing'
+    delete:
+      tags:
+        - admin
+      summary: Delete administrations by id admin.
+      description: Delete administrations by id admin.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id admin.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /administration/applicant/{id}:
+    get:
+      tags:
+        - admin
+      summary: Get administrations by id applicant.
+      description: Get administrations by id applicant.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id admin applicant.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdministrationForShowing'
+    delete:
+      tags:
+        - admin
+      summary: Delete administrations by id applicant.
+      description: Delete administrations by id applicant.
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          description: Id applicant.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "500":
+          $ref: "#/components/responses/ServerError"
+components:
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    idInPath:
+      required: true
+      name: id
+      in: path
+      schema:
+        type: integer
+  schemas:
+    Login:
+      type: object
+      properties:
+        mail:
+            type: string
+            example: "touroncamille@icloud.com"
+        password:
+          type: string
+          example: "00TheBigBoss00"
+      xml:
+        name: Login
+    Member:
+      type: object
+      properties:
+        firstname:
+          type: string
+          example: "Touron"
+        lastname:
+          type: string
+          example: "Camille"
+        isAdmin:
+          type: boolean
+          example: "false"
+        password:
+          type: string
+          example: "etvhtrdvtyesvy"
+        mail:
+            type: string
+            example: "touroncamille@icloud.com"
+      xml:
+        name: Member
+    MemberForShowing:
+      type: object
+      properties:
+        firstname:
+          type: string
+          example: "Touron"
+        lastname:
+          type: string
+          example: "Camille"
+        isAdmin:
+          type: boolean
+          example: "false"
+        mail:
+          type: string
+          example: "touroncamille@icloud.com"
+      xml:
+        name: MemberForShowing
+    MembersForShowing:
+      type: array
+      xml:
+        wrapped: true
+      items:
+        $ref: "#/components/schemas/MemberForShowing"
+    EventForShowing:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Super fete ynov."
+        date:
+          type: string
+          example: "22-03-1999"
+        location:
+          type: string
+          example: "Toulouse"
+        priceLimit:
+          type: integer
+          example: 10
+        theme:
+          type: string
+          example: "Cowboy"  
+      xml:
+        name: EventForShowing
+    EventsForShowing:
+      type: array
+      xml:
+        wrapped: true
+      items:
+        $ref: "#/components/schemas/EventForShowing"
+    AdministrationForShowing:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        idAdmin:
+          type: integer
+          example: 1
+        idApplicant:
+          type: integer
+          example: 56
+        isDone:
+          type: boolean
+          example: true
+        application:
+          type: string
+          example: "Be admin."
+      xml:
+        name: EventForShowing
+    AdministrationsForShowing:
+      type: array
+      xml:
+        wrapped: true
+      items:
+        $ref: "#/components/schemas/AdministrationForShowing"
+    ParticipationForShowing:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          example: 1
+        memberAttributedId:
+          type: integer
+          example: 2
+        eventId:
+          type: integer
+          example: 3
+        isOrganizer:
+          type: boolean
+          example: true
+      xml:
+        name: ParticipationForShowing
+    ParticipationsForShowing:
+      type: array
+      xml:
+        wrapped: true
+      items:
+        $ref: "#/components/schemas/ParticipationForShowing"
+    AdministrationForCreation:
+      type: object
+      properties:
+        idApplicant:
+          type: integer
+          example: 1
+        application:
+          type: string
+          example: "Be admin."
+      xml:
+        name: AdministrationForCreation
+  requestBodies:
+    Login:
+      required: true
+      description: Login request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Login'
+    MemberCreation:
+      required: true
+      description: Member creation request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Member'
+    EventCreation:
+      required: true
+      description: Registration request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EventForShowing'
+    AdministrationCreation:
+      required: true
+      description: Creation request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AdministrationForCreation'
+    ParticipationCreation:
+      required: true
+      description: Participation creation request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EventForShowing'
+  responses:
+    ServerError:
+      description: "Server seems to be in bad shape..."
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [ success, message ]
+            properties:
+              success:
+                type: boolean
+                default: false
+                example: false
+              message:
+                type: string
+                default: "Server seems to be in bad shape..."
+                example: "Server seems to be in bad shape..."
