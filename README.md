@@ -1,2 +1,2 @@
 # YNOV_B3_DEVOPS_WORKFLOW_RELEASE
-School project to implement a release workflow . Team of four.
+School project to implement a release workflow . Team of four (Camille / Etienne / Kevin / Marco).
