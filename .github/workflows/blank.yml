@@ -33,7 +33,7 @@ jobs:
 
       
       - name: Create a new instance
-        uses: aphilibeaux/scw-cli-action@v2.3.1
+        uses: jawher/action-scw@v2.6.2
         env:
           SCW_ACCESS_KEY:  rg.fr-par.scw.cloud/ynov-devops-container-registry
           SCW_SECRET_KEY: 56632f00-b4e9-43fd-bf72-05ca1c370b7b
@@ -49,7 +49,7 @@ jobs:
         run: ...
 
       - name: Delete instance
-        uses: aphilibeaux/scw-cli-action@v2.3.1
+        uses: jawher/action-scw@v2.6.2
         env:
           SCW_ACCESS_KEY:  rg.fr-par.scw.cloud/ynov-devops-container-registry
           SCW_SECRET_KEY: 56632f00-b4e9-43fd-bf72-05ca1c370b7b
