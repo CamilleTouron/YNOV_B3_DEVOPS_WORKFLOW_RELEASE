@@ -29,11 +29,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-        working-directory: /API
+        working-directory: ./API
       - run: npm run build --if-present
-        working-directory: /API
+        working-directory: ./API
       - run: npm test
-        working-directory: /API
+        working-directory: ./API
   
       - name: HTTP Request Action
         uses: fjogeleit/http-request-action@v1.12.0
