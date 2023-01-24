@@ -4,7 +4,7 @@ const app = require('./../app');
 async function loginAdmin() {
     const body = {mail:"touroncamille@icloud.com",password:"admin"};
     const resp = await request(app)
-        .post("/login")
+        .post("/logineeett")
         .send(body);    
     
     const token = resp.body.token;
