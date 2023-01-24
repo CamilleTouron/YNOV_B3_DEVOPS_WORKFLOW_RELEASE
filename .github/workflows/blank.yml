@@ -14,6 +14,8 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    env:
+      SECRET: ${{ secrets.API_SCALEAWAY}}
 
     # steps to perform in job
     steps:
@@ -23,4 +25,4 @@ jobs:
         run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
   
       - name: Login to Scaleway
-        run : docker login rg.fr-par.scw.cloud/ynov-devops-container-registry -u nologin --password ${{ secrets.API_SCALEAWAY}}
+        run : docker login rg.fr-par.scw.cloud/ynov-devops-container-registry -u nologin --password $SECRET
