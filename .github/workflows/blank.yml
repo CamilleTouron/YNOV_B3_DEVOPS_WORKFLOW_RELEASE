@@ -20,4 +20,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the Docker image
         working-directory: ./API
-        run: workdir ./api ;docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
