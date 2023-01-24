@@ -4,7 +4,7 @@
   "description": "API for Secret Santa Events",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -r dotenv/config server.js dotenv_config_path=./configurations/.env.DEV",
+    "start": "node -r dotenv/config server.js dotenv_config_path=./configurations/.env.DEV",
     "start:prod": "node -r dotenv/config server.js dotenv_config_path=./configurations/.env.PROD",
     "test": "jest"
   },
