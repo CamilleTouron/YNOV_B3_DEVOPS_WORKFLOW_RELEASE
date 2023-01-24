@@ -32,13 +32,6 @@ jobs:
         working-directory: API
       - run: npm test
         working-directory: API
-  
-      - name: HTTP Request Action
-        uses: fjogeleit/http-request-action@v1.12.0
-        with:
-          url: 'http://156.67.217.63:3003/login'
-          method: 'POST'
-          data: '{"mail":"touroncamille@icloud.com","password":"admin"}'
 
             
 
