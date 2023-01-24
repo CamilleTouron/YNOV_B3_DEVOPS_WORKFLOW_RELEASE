@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('./../app');
 
 async function loginAdmin() {
-    const body = {mail:"touronc",password:"admin"};
+    const body = {mail:"touroncamille@icloud.com",password:"admin"};
     const resp = await request(app)
         .post("/login")
         .send(body);    
