@@ -1,5 +1,8 @@
 name: Workflow-github-action
 on:
+  push:
+    branches: [ release ]
+    
   workflow_dispatch:
     inputs:
       logLevel:
