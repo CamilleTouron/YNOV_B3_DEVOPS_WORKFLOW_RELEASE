@@ -33,11 +33,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
+      - name : Dependencies Installation
+        run: npm ci
         working-directory: API
-      - run: npm test
+      - name : Jest test
+        run: npm workflow
         working-directory: API
-        timeout-minutes: 1
+      - name: Merge release into main 
+        run: |
+            git fetch --unshallow
+            git checkout destroy
+            git pull
+            git merge --no-ff release -m "Merge release into main"
+            git push
 
             
 
