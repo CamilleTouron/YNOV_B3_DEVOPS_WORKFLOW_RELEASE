@@ -42,8 +42,9 @@ jobs:
         run: |
             git config --global user.name "Deolinas"
             git config --global user.email "lopezetienne@wanadoo.fr"
+            git add .
             git commit -a -m "commit message"
-            git push remote dev:destroy
+            git push remote release:destroy
 
             
 
