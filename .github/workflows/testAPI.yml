@@ -37,17 +37,15 @@ jobs:
         run: npm ci
         working-directory: API
       - name : Jest test
-        run: npm workflow
+        run: npm test
         working-directory: API
       - name: Merge release into main 
         run: |
+            git config --global user.name "Deolinas"
+            git config --global user.email "lopezetienne@wanadoo.fr"
             git fetch --unshallow
             git checkout destroy
             git pull
             git merge --no-ff release -m "Merge release into main"
             git push
-
-            
-
-
       
