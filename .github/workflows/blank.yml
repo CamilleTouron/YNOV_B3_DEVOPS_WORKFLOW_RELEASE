@@ -19,7 +19,7 @@ jobs:
       SECRET: ${{ vars.API_SCALEAWAY}}
       ACCES_KEY: ${{ vars.ACCES_KEY}}
       ORGANIZATION8ID: ${{ vars.ORGANIZATION_ID}}
-      SECRET_KEY: ${{ vars.SECRET_KEY}}
+      SECRETKEY: ${{ vars.SECRET_KEY}}
 
     # steps to perform in job
     steps:
@@ -34,7 +34,7 @@ jobs:
       - name: Create a new instance
         uses: jawher/action-scw@v2.6.2
         env:
-          SCW_ACCESS_KEY: $ACCES_KEY
+          SCW_ACCESS_KEY: $ACCESKEY
           SCW_SECRET_KEY: $SECRET_KEY
           SCW_ORGANIZATION_ID: $ORGANISATION_ID
           SCW_ZONE: fr-par-1
