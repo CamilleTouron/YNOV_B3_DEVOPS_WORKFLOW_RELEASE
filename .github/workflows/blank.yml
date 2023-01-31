@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the Docker image
         working-directory: ./API
-        run: docker build . --file Dockerfile --tag Workflow-release
+        run: docker build . --file Dockerfile -t Workflow-release
   
       - name: Login to Scaleway
         run : docker login rg.fr-par.scw.cloud/ynov-devops-container-registry -u nologin --password $SECRET
