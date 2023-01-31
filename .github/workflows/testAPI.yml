@@ -37,7 +37,7 @@ jobs:
         run: npm ci
         working-directory: API
       - name : Jest test
-        run: npm workflow
+        run: npm run wkflw
         working-directory: API
       - name: Merge release into main 
         run: |
