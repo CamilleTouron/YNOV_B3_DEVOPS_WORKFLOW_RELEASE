@@ -36,6 +36,15 @@ jobs:
       - name : push image
         run : docker push rg.fr-par.scw.cloud/ynov-devops-container-registry/image_build:latest
       
+      - name: 'Prune excess Docker tags from registry'
+        uses: devoxa/scaleway-container-registry-prune-action@v1
+        with:
+          scw-secret-token: ${{ vars.ORGANIZATION_ID}}
+          image: rg.fr-par.scw.cloud/ynov-devops-container-registry/image_build:latest
+          tag-pattern: ^(?!pr-).+$
+          keep-last: 10
+
+      
       - name: Create a new instance
         uses: jawher/action-scw@v2.6.2
         env:
@@ -47,12 +56,5 @@ jobs:
         with:
           args: instance server create image=image_build:latest type=DEV1-S name=Workflow-Release tags.0=temp tags.1=release --wait -o=json$
           
-      - name: 'Prune excess Docker tags from registry'
-        uses: devoxa/scaleway-container-registry-prune-action@v1
-        with:
-          scw-secret-token: ${{ vars.ORGANIZATION_ID}}
-          image: rg.fr-par.scw.cloud/ynov-devops-container-registry/image_build:latest
-          tag-pattern: ^(?!pr-).+$
-          keep-last: 10
-
+      
      
