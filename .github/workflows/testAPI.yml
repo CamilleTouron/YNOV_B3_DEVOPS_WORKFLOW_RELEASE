@@ -48,8 +48,4 @@ jobs:
             git pull
             git merge --no-ff release -m "Merge release into main"
             git push
-
-            
-
-
       

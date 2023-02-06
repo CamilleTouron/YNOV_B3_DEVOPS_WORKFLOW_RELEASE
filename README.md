@@ -13,3 +13,5 @@ A release workflow is a succession of stages to deliver a stable verion of a pro
 
 ## This file will contain all the step to use the workflow that we are implementing.
 
+
+
