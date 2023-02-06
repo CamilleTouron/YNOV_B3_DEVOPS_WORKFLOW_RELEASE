@@ -1,5 +1,5 @@
-# This is a basic workflow to help you get started with Actions
 
+# This is a basic workflow to help you get started with Actions
 name: CI
 
 # Controls when the workflow will run
@@ -15,14 +15,38 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
-      SECRET: ${{ secrets.API_SCALEAWAY}}
+      SECRET: ${{ vars.API_SCALEAWAY}}
+      ACCES_KEY: ${{ vars.ACCES_KEY}}
+      ORGANIZATION_ID: ${{ vars.ORGANIZATION_ID}}
+      SECRET_KEY: ${{ vars.SECRET_KEY}}
 
     # steps to perform in job
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
         working-directory: ./API
-        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        run: docker build . --file Dockerfile -t secretsanta
   
       - name: Login to Scaleway
         run : docker login rg.fr-par.scw.cloud/ynov-devops-container-registry -u nologin --password $SECRET
+        
+      - name : set image
+        run : docker tag secretsanta:latest rg.fr-par.scw.cloud/ynov-devops-container-registry/secretsanta:latest
+      
+      - name : push image
+        run : docker push rg.fr-par.scw.cloud/ynov-devops-container-registry/secretsanta:latest
+      
+      
+      - name: Create a new instance
+        uses: jawher/action-scw@v2.6.2
+        env:
+          SCW_ACCESS_KEY:  ${{ vars.ACCES_KEY}}
+          SCW_SECRET_KEY: ${{ vars.ORGANIZATION_ID}}
+          SCW_ORGANIZATION_ID:   ${{ vars.SECRET_KEY}}
+          SCW_DEFAULT_PROJECT_ID: 3cc6dc57-a36a-4e5a-9221-38e6b3cd9b01
+          SCW_ZONE: fr-par-1
+        with:
+          args: instance server create image=ubuntu_bionic type=DEV1-S name=workflow_release tags.0=temp tags.1=secretsanta_workflow --wait -o=json
+          
+      
+     
