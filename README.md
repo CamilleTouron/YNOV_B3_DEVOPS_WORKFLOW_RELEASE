@@ -12,6 +12,7 @@ A release is a version considered stable that will be delivered to the client.
 A release workflow is a succession of stages to deliver a stable verion of a product.
 
 ## This file will contain all the step to use the workflow that we are implementing.
+To trigger the workflow push on release.
 
 
 
